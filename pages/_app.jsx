@@ -2,26 +2,38 @@
 import { useEffect, useState } from 'react'
 
 function App() {
-
-    const [content, setContent] = useState({})
+    const [content, setContent] = useState([])
 
     useEffect(() => {
         getRefer()
     }, [])
 
     const getRefer = async () => {
+        const referer = document.referrer        
+        let paramString = referer.split('?')[1]
 
-        const response = await fetch('/api/referer')
-        const jsonData = await response.json()
+        if (paramString) {
+            const searchParams = new URLSearchParams(paramString);
+            const refererAll = []
+            for (const [key, value] of searchParams) {
+                refererAll.push({ key: key, value: value })
+            }
     
-        setContent(jsonData.content)
+            setContent(refererAll)
+        }
     }
 
     const rawMarkup = (raw) => {
         return { __html: raw }
     }
 
-    return (<div dangerouslySetInnerHTML={rawMarkup(content)} />)
+    return (
+        <div>{
+            content.map(item => (<pre>{ item.key }: {item.value}</pre>))
+        }
+        </div>
+        
+    )
 }
 
 export default App
