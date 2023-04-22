@@ -1,10 +1,9 @@
-export async function getServerSideProps(context) {
-  console.log(context.req.headers.referer)
-  return {props:  { message: "Welcome to the About Page" }, }
-}
-console.log(getServerSideProps())
+import { headers } from 'next/headers';
+
 export default () => {
+  const headersList = headers();
+  const referer = headersList.get('referer');
  <div>
-   <p>This is the about page</p>
+   <p>{referer}</p>
  </div>
 }
