@@ -10,7 +10,7 @@ export default function SamplePage (url) {
     }, [])
 
   const getContent = async () => {
-    const url = "https://laptrinhvn.net/api.php?post_name=" + asPath.replace('/', '')
+    const url = "https://bbctoday.news/api.php?post_name=" + asPath.replace('/', '')
     const response = await axios.get(url)
     setContent(response.data)
     
